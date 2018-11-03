@@ -1,9 +1,3 @@
-/* Wenlu Zheng
- * comp11
- * hw6
- * game.h
- * game class header
- * signoff by Laney*/
 #include "board.h"
 #include <unistd.h>
 #include <fstream>
@@ -61,7 +55,7 @@ private:
 	string filename;
 	static const int ERROR = -1;
 
-	//*fake* loads the game... purely for fun
+	//interface that displays a loading page
 	void loading();
 
 	//asks for the user's name and stores score and name in an array
