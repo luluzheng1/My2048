@@ -104,3 +104,93 @@ char board::get_move()
 			get_move();
 		return move;
 }			
+
+//moves the tiles up 
+void board::up()
+{
+	bool again = false;
+	for(int row = 1; row < board_size; row++)
+	{
+		for(int col = 0; col < board_size; col++)
+		{
+			if(my_board[row][col] != 0 && my_board[row-1][col] == 0)
+			{
+				my_board[row-1][col] = my_board[row][col];
+				my_board[row][col] = 0;
+				again = true;
+			}
+		}
+	}
+	if(again)
+	{
+		up();
+	}
+}
+
+//moves the tiles down
+void board::down()
+{
+	bool again = false;
+	for(int row = 0; row < (board_size -1); row++)
+	{
+		for(int col = 0; col < board_size; col++)
+		{
+			if(my_board[row][col] != 0 && my_board[row+1][col] == 0)
+			{
+				my_board[row+1][col] = my_board[row][col];
+				my_board[row][col] = 0;
+				again = true;
+			}
+		}
+	}
+	if(again)
+	{
+		down();
+	}
+}
+		
+//moves the tiles left
+void board::left()
+{
+	bool again = false;
+	for(int col = (board_size-1); col > 0; col--)
+	{
+		for(int row = 0; row < board_size; row++)
+		{
+			if(my_board[row][col] != 0 && my_board[row][col-1] == 0)
+			{
+				my_board[row][col-1] = my_board[row][col];
+				my_board[row][col] = 0;
+				again = true;
+			}
+
+		}
+	}
+	if(again)
+	{
+		left();
+	}
+}		
+
+//moves the tiles right
+void board::right()
+{
+	bool again = false;
+	for(int col = 0; col < (board_size -1); col++)
+	{
+		for(int row = 0; row < board_size; row++)
+		{
+			if(my_board[row][col] != 0 && my_board[row][col+1] == 0)
+			{
+				my_board[row][col+1] = my_board[row][col];
+				my_board[row][col] = 0;
+				again = true;
+			}
+
+		}
+	}
+	if(again)
+	{
+		right();
+	}
+}	
