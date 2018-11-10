@@ -194,3 +194,101 @@ void board::right()
 		right();
 	}
 }	
+
+//moves the tiles up, down, left, or right
+void board::update_board()
+{	
+	switch(move)
+	{
+	case 'w':
+		up();
+		break;
+
+	case 's':
+		down();
+		break;
+
+	case 'a':
+		left();
+		break;
+
+	case 'd':
+		right();
+		break;
+	}
+}
+
+//combines neighboring tiles of the same value after a move
+//returns the points earned in that move 
+int board::combine()
+{
+	int curr_points = 0;
+	if(move == 'w')
+	{
+		for(int row = 1; row < board_size; row++)
+		{
+			for(int col = 0; col < board_size; col++)
+			{
+				if(my_board[row][col] != 0 && my_board[row][col] == my_board[row-1][col])
+				{
+					my_board[row-1][col] += my_board[row][col];
+					my_board[row][col] = 0;
+					curr_points += my_board[row-1][col];
+				}
+			}
+		}
+		return curr_points;
+	}
+
+	else if(move == 's')
+	{
+		for(int row = (board_size -1); row > 0; row--)
+		{
+			for(int col = 0; col < board_size; col++)
+			{
+				if(my_board[row][col] != 0 && my_board[row][col] == my_board[row-1][col])
+				{
+					my_board[row][col] += my_board[row-1][col];
+					my_board[row-1][col] = 0;
+					curr_points += my_board[row][col];
+				}
+			}
+		}
+		return curr_points;
+	}
+
+	else if(move == 'a')
+	{
+		for(int col = 1; col < board_size; col++)
+		{	
+			for(int row = 0; row < board_size; row++)
+			{
+				if(my_board[row][col] != 0 && my_board[row][col] == my_board[row][col-1])
+				{
+					my_board[row][col-1] += my_board[row][col];
+					my_board[row][col] = 0;
+					curr_points += my_board[row][col-1];
+				}
+			}
+		}
+		return curr_points;
+	}
+
+	else if(move == 'd')
+	{
+		for(int col = (board_size -1); col >= 0; col--)
+		{
+			for(int row = 0; row < board_size; row++)
+			{
+				if(my_board[row][col] != 0 && my_board[row][col] == my_board[row][col+1])
+				{
+					my_board[row][col+1] += my_board[row][col];
+					my_board[row][col] = 0;
+					curr_points += my_board[row][col+1];
+				}	
+			}
+		}
+		return curr_points;
+	}
+	return curr_points;
+}
