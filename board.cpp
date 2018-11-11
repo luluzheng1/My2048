@@ -292,3 +292,78 @@ int board::combine()
 	}
 	return curr_points;
 }
+
+//add the tile to a random position(row, col) on the board
+//checks if user enters a valid input
+//if not, prompt user to reenter
+void board::add_tile()
+{
+	srand(time(NULL));
+	if(!all_filled())
+	{
+		int chance = (rand() % 100) + 1;
+		int value = 0;
+		if (chance < 10)
+		{
+			value = 4;
+		} 
+		else 
+			value = 2;
+
+		bool has_value = false;
+		while(!has_value)
+		{
+			int row = rand() % (board_size);
+			int col = rand() % (board_size);
+			if(my_board[row][col] == 0)
+			{
+				my_board[row][col] = value;
+				has_value = true;
+			}
+		}
+	} 
+}
+
+//checks if all tiles are filled
+//returns true if all tiles have a value other than 0
+bool board::all_filled()
+{
+	for (int row = 0; row < board_size; ++row)
+	{
+		for(int col = 0; col < board_size; ++ col)
+		{
+			if (my_board[row][col] == 0)
+				return false;
+		}
+	}
+	return true;
+}
+
+//checks if neighboring tiles have the same value
+//returns false if no neighboring tiles are of the same value
+bool board::same_value()
+{
+	for(int row = 0; row < board_size; row++)
+		for(int col = 0; col < (board_size - 1); col++)
+		{
+			if(my_board[row][col] == my_board[row][col+1])
+				return true;
+		}
+	for(int row = 0; row < (board_size -1); row++)
+		for(int col = 0; col < board_size; col++)
+		{
+			if(my_board[row][col] == my_board[row+1][col])
+				return true;
+		}
+	return false;
+}
+	
+//destructor
+board::~board()
+{
+	for (int row = 0; row < board_size; ++row)
+	{
+		delete [] my_board[row];
+	}
+	delete [] my_board;
+}
